@@ -1,11 +1,11 @@
 import React,{useState, useEffect} from 'react'
-import "./css/data.css"
+import "../css/data.css"
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ListIcon from '@mui/icons-material/List';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import { db } from './firebase';
+import { db } from '../firebase';
 function Data() {
     const [files , setFiles]= useState([]);
 

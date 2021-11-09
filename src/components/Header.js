@@ -1,6 +1,6 @@
 import React from 'react'
-import "./css/header.css"
-import gdrivelogo from "./glogo.png"
+import "../css/header.css"
+import gdrivelogo from "../glogo.png"
 import SearchIcon from '@mui/icons-material/Search';
 import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
