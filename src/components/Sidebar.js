@@ -13,7 +13,7 @@ import firebase from "firebase";
 import { db, storage } from '../firebase';
 import {auth,provider} from "../firebase";
 
-function Sidebar() {
+function Sidebar(props) {
     const [open, setOpen] = useState(false);
     const [uploading, setUploading]= useState(false);
     const [file, setFile] = useState(null);
@@ -121,7 +121,7 @@ function Sidebar() {
                 </div>
             </div>
             <div className="sidebar_btn logout">
-              <buttton onClick={signout}>Logout</buttton>
+              <buttton onClick={()=>props.loginState(null)}>Logout</buttton>
             </div>
         </div>
         </>

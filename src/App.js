@@ -22,7 +22,7 @@ function App() {
         <>
     <Header photoURL = {user.photoURL}/>
     <div className="App">
-      <Sidebar/>
+      <Sidebar loginState={setUser}/>
       <Data/>
     </div>
     </>
