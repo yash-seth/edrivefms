@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import "./css/sidebar.css"
-import addlogo from "./addfile.png"
+import "../css/sidebar.css"
+import addlogo from "../addfile.png"
 import MobileScreenShareIcon from '@mui/icons-material/MobileScreenShare';
 import DevicesIcon from '@mui/icons-material/Devices';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
@@ -10,9 +10,10 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import CloudQueueIcon from '@mui/icons-material/CloudQueue';
 import { Modal } from '@mui/material';
 import firebase from "firebase";
-import { db, storage } from './firebase';
-import {auth,provider} from "./firebase";
-function Sidebar() {
+import { db, storage } from '../firebase';
+import {auth,provider} from "../firebase";
+
+function Sidebar(props) {
     const [open, setOpen] = useState(false);
     const [uploading, setUploading]= useState(false);
     const [file, setFile] = useState(null);
@@ -120,7 +121,7 @@ function Sidebar() {
                 </div>
             </div>
             <div className="sidebar_btn logout">
-                <buttton onClick={signout}>Logout</buttton>
+              <buttton onClick={()=>props.loginState(null)}>Logout</buttton>
             </div>
         </div>
         </>

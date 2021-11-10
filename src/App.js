@@ -1,10 +1,11 @@
 
-import Header from "../Header";
-import Sidebar from "../Sidebar";
-import Data from "../Data";
+import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
+import Data from "./components/Data";
 import React , {useState} from "react"
-import gdrivelogo from "../glogo.png"
-import {auth,provider} from "../firebase"
+import gdrivelogo from "./glogo.png"
+import {auth,provider} from "./firebase"
+
 function App() {
   const [user, setUser] = useState(null);
   const signIn=()=>{
@@ -21,7 +22,7 @@ function App() {
         <>
     <Header photoURL = {user.photoURL}/>
     <div className="App">
-      <Sidebar/>
+      <Sidebar loginState={setUser}/>
       <Data/>
     </div>
     </>
