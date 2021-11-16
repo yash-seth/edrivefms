@@ -7,9 +7,10 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AppsIcon from '@mui/icons-material/Apps';
 import { Avatar } from '@mui/material';
-function header({photoURL}) {
+
+function header(props) {
     return (
-        <div class="header">
+        <div className="header">
            
             <div className="header__logo">
             <img src={gdrivelogo} alt=""></img>
@@ -20,14 +21,14 @@ function header({photoURL}) {
             <input type="text" placeholder="search in drive"/>
            <FormatAlignCenterIcon/>
             </div>
-            <div className="header__icons">
+            <div className="header__icons">  
                 <span>
                     <HelpOutlineIcon/>
                     <SettingsIcon/>
                 </span>
                 <span>
                     <AppsIcon/>
-                    <Avatar src={photoURL}/>
+                    <Avatar src={props.photoURL}/>
                 </span>
             </div>
 
