@@ -11,13 +11,12 @@ import CloudQueueIcon from '@mui/icons-material/CloudQueue';
 import { Modal } from '@mui/material';
 import firebase from "firebase";
 import { db, storage } from '../firebase';
-import {auth,provider} from "../firebase";
 
 function Sidebar(props) {
     const [open, setOpen] = useState(false);
     const [uploading, setUploading]= useState(false);
     const [file, setFile] = useState(null);
-    const [user, setUser] = useState(null);
+    console.log(props.userData.uid);
     const handleClose=()=>{
         setOpen(false);
     }
@@ -30,23 +29,18 @@ function Sidebar(props) {
             setFile(e.target.files[0]);
         }
     }
-    const signout=()=>{
-        auth.signOut().then(()=>{
-          console.log("user signed out");
-        }).catch(error=>{
-          alert(error.message);
-        })
-      }
     const handleUpload=(event)=>{
             event.preventDefault();
             setUploading(true);
-            storage.ref(`Myfiles/${file.name}`).put(file).then(snapshot=>{
+            storage.ref(`Myfiles/${props.userData.displayName}/${file.name}`).put(file).then(snapshot=>{
 
-                storage.ref("Myfiles").child(file.name).getDownloadURL().then(url=>{
-                    db.collection("myfiles").add({
+                storage.ref(`Myfiles/${props.userData.displayName}`).child(file.name).getDownloadURL().then(url=>{
+                    db.collection(`${props.userData.displayName}`).add({
                         timestamp:firebase.firestore.FieldValue.serverTimestamp(),
                         filename: file.name,
                         fileURL: url,
+                        username : props.userData.displayName,
+                        userId : props.userData.uid,
                         size: snapshot._delegate.bytesTransferred
                     })
                     setUploading(false);
@@ -69,7 +63,7 @@ function Sidebar(props) {
                                 uploading?(<p className="uploading">Uploading</p>):(
                             <>
                             <input type="file" onChange={handleChange}/>
-                            <input type="submit" className="post_submit" onClick={handleUpload}/>
+                            <input type="submit" value="UPLOAD" className="post_submit" onClick={handleUpload}/>
                             </> )
                             }
                         </div>
@@ -125,6 +119,7 @@ function Sidebar(props) {
             </div>
         </div>
         </>
+        
     )
 }
 

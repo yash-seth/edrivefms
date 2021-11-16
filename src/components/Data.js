@@ -6,11 +6,10 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { db } from '../firebase';
-function Data() {
+function Data(props) {
     const [files , setFiles]= useState([]);
-
     useEffect(() => {
-      db.collection("myfiles").onSnapshot(snapshot=>{
+      db.collection(`${props.userData.displayName}`).onSnapshot(snapshot=>{
             setFiles(snapshot.docs.map(doc=>({
                 id:doc.id,
                 data: doc.data()
@@ -67,7 +66,7 @@ function Data() {
                             return <div className="detailsrow">
                             <p> <a href={file.data.fileURL} target="_blank">
                                 <InsertDriveFileIcon/>{file.data.filename}</a></p>
-                            <p>Me</p>
+                            <p>{file.data.username}</p>
                             <p>{ new Date(file.data.timestamp?.seconds*1000).toUTCString()}</p>
                             <p>{formatBytes(file.data.size)}</p>
                             </div>
