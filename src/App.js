@@ -20,7 +20,7 @@ function App() {
     {
       user ? (
         <>
-    <Header photoURL = {user.photoURL}/>
+    <Header photoURL = {user.photoURL} loginState={setUser}/>
     <div className="App">
       <Sidebar loginState={setUser} userData={user}/>
       <Data loginState={setUser} userData={user}/>
