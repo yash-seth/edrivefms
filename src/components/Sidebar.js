@@ -11,11 +11,10 @@ import CloudQueueIcon from '@mui/icons-material/CloudQueue';
 import { Modal } from '@mui/material';
 import firebase from "firebase";
 import { db, storage } from '../firebase';
-import { auth } from "../firebase";
 
 function Sidebar(props) {
     const [open, setOpen] = useState(false);
-    const [uploading, setUploading] = useState(false);
+    const [uploading, setUploading]= useState(false);
     const [creating, setCreating] = useState(false);
     const [file, setFile] = useState(null);
     const [modalState, setModalState] = useState(false);
@@ -33,29 +32,29 @@ function Sidebar(props) {
     const closeModal = () => {
         setModalState(false);
     }
-    const handleChange = (e) => {
-        if (e.target.files[0]) {
+    const handleChange=(e)=>{
+        if(e.target.files[0])
+        {
             setFile(e.target.files[0]);
         }
     }
-    const signout = () => {
-        auth.signOut().then(() => {
-            console.log("user signed out");
-        }).catch(error => {
-            alert(error.message);
-        })
-    }
-    const handleUpload = (event) => {
-        event.preventDefault();
-        setUploading(true);
-        storage.ref(`Myfiles/${file.name}`).put(file).then(snapshot => {
+    const handleUpload=(event)=>{
+            event.preventDefault();
+            setUploading(true);
+            storage.ref(`Myfiles/${props.userData.displayName}/${file.name}`).put(file).then(snapshot=>{
 
-            storage.ref("Myfiles").child(file.name).getDownloadURL().then(url => {
-                db.collection("myfiles").add({
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    filename: file.name,
-                    fileURL: url,
-                    size: snapshot._delegate.bytesTransferred
+                storage.ref(`Myfiles/${props.userData.displayName}`).child(file.name).getDownloadURL().then(url=>{
+                    db.collection(`${props.userData.displayName}`).add({
+                        timestamp:firebase.firestore.FieldValue.serverTimestamp(),
+                        filename: file.name,
+                        fileURL: url,
+                        username : props.userData.displayName,
+                        userId : props.userData.uid,
+                        size: snapshot._delegate.bytesTransferred
+                    })
+                    setUploading(false);
+                    setFile(null);
+                    setOpen(false);
                 })
                 setUploading(false);
                 setFile(null);
@@ -78,6 +77,22 @@ function Sidebar(props) {
     const handleFolderNameChange = (e) => {
         setFolderName(e.target.value);
     }
+
+    const handleCreateFolder = () => {
+        setCreating(true);
+        setFolderName(folderName);
+        console.log(`Folder '${folderName}' was created!`);
+        setFolderName("");
+        setTimeout(function() {
+            setCreating(false);
+            setModalState(false);
+          }, 2000);
+    }
+
+    const handleFolderNameChange = (e) => {
+        setFolderName(e.target.value);
+    }
+
     return (
         <>
             <Modal open={open} onClose={handleClose}>
@@ -88,17 +103,17 @@ function Sidebar(props) {
                         </div>
                         <div className="modalBody">
                             {
-                                uploading ? (<p className="uploading">Uploading</p>) : (
-                                    <>
-                                        <input type="file" onChange={handleChange} />
-                                        <input type="submit" className="post_submit" onClick={handleUpload} />
-                                    </>)
+                                uploading?(<p className="uploading">Uploading</p>):(
+                            <>
+                            <input type="file" onChange={handleChange}/>
+                            <input type="submit" value="UPLOAD" className="post_submit" onClick={handleUpload}/>
+                            </> )
                             }
                         </div>
                     </form>
                 </div>
-            </Modal>
-            <Modal open={modalState} onClose={closeModal}>
+        </Modal>
+        <Modal open={modalState} onClose={closeModal}>
                 <div className="modal_pop">
                     <form>
                         <div className="modalHeading">
@@ -116,6 +131,35 @@ function Sidebar(props) {
                             }
                         </div>
                     </form>
+                </div>
+            </Modal>
+        <div className="sidebar">
+            <div className="sidebar_btn">
+                <button onClick={handleOpen}>
+                    <img src={addlogo} alt=""></img>
+                    <span>New</span>
+                </button>
+                <button onClick={openModal}>
+                        <img src={addlogo} alt=""></img>
+                        <span>New Folder</span>
+                    </button>
+            </div>
+            <div className="sidebar__options">
+                <div className="sidebar__option sidebaroptionActive">
+                    <MobileScreenShareIcon/>
+                    <span><b>My Drive</b></span>
+                </div>
+                <div className="sidebar__option">
+                    <DevicesIcon/>
+                    <span>Computers</span>
+                </div>
+                <div className="sidebar__option">
+                    <PeopleAltOutlinedIcon/>
+                    <span>Shared with me</span>
+                </div>
+                <div className="sidebar__option">
+                    <QueryBuilderOutlinedIcon/>
+                    <span>Recent</span>
                 </div>
             </Modal>
             <div className="sidebar">
@@ -171,6 +215,7 @@ function Sidebar(props) {
                 </div>
             </div>
         </>
+        
     )
 }
 

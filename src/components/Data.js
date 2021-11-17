@@ -5,28 +5,26 @@ import ListIcon from '@mui/icons-material/List';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { db, storage } from '../firebase';
+import { db,storage } from '../firebase';
 import { Modal } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 function Data(props) {
-    const [files, setFiles] = useState([]);
+    const [files , setFiles]= useState([]);
     const [deleteModalState, setDeleteModalState] = useState(false);
     const [deleting, setDeleting] = useState(false);
 
-    const handleClose = () => {
-        setDeleteModalState(false)
-    }
-
     useEffect(() => {
-        db.collection("myfiles").onSnapshot(snapshot => {
-            setFiles(snapshot.docs.map(doc => ({
-                id: doc.id,
+      db.collection(`${props.userData.displayName}`).onSnapshot(snapshot=>{
+            setFiles(snapshot.docs.map(doc=>({
+                id:doc.id,
                 data: doc.data()
             })))
         })
     }, [])
-    function formatBytes(bytes, decimals = 2) {
-        if (bytes === 0) return '0 Bytes';
+
+    function formatBytes(bytes, decimals =2){
+        if(bytes === 0) return '0 Bytes';
 
         const k = 1024;
         const dm = decimals < 0 ? 0 : decimals;
@@ -39,7 +37,7 @@ function Data(props) {
     const deleteFile = (filename, fileURL) => {
         setDeleting(true);
         console.log(`File ${filename} was deleted`);
-        var file_query = db.collection('myfiles').where('fileURL', '==', fileURL);
+        var file_query = db.collection(`${props.userData.displayName}`).where('fileURL', '==', fileURL);
         file_query.get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
                 doc.ref.delete();
@@ -49,6 +47,10 @@ function Data(props) {
             setDeleteModalState(false);
             setDeleting(false);            
         }, 3500);
+    }
+
+    const handleClose = () => {
+        setDeleteModalState(false)
     }
 
     return (
@@ -68,11 +70,11 @@ function Data(props) {
                     {
                         files.map((file) => {
                             return <>
-                                <div className="data_file">
-                                    <InsertDriveFileIcon />
+                                    <div className="data_file"> 
+                                    <InsertDriveFileIcon/>
                                     <p><a href={file.data.fileURL} target="_blank">{file.data.filename}</a></p>
-                                </div>
-                            </>
+                                    </div>
+                                    </>
                         })
                     }
 
@@ -89,12 +91,12 @@ function Data(props) {
                     {
                         files.map((file) => {
                             return <div className="detailsrow">
-                                <p> <a href={file.data.fileURL} target="_blank">
-                                    <InsertDriveFileIcon />{file.data.filename}</a></p>
-                                <p>Me</p>
-                                <p>{new Date(file.data.timestamp?.seconds * 1000).toUTCString()}</p>
-                                <p>{formatBytes(file.data.size)}</p>
-                                <p><button onClick={() =>setDeleteModalState(true)}><DeleteIcon /></button></p>
+                            <p> <a href={file.data.fileURL} target="_blank">
+                                <InsertDriveFileIcon/>{file.data.filename}</a></p>
+                            <p>{file.data.username}</p>
+                            <p>{ new Date(file.data.timestamp?.seconds*1000).toUTCString()}</p>
+                            <p>{formatBytes(file.data.size)}</p>
+                            <p><button onClick={() =>setDeleteModalState(true)}><DeleteIcon /></button></p>
                                 <Modal open={deleteModalState} onClose={handleClose}>
                                     <div className="modal_pop">
                                         <form>
