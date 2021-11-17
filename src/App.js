@@ -2,7 +2,7 @@
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Data from "./components/Data";
-import React , {useState} from "react"
+import React , {useState, useEffect} from "react"
 import gdrivelogo from "./glogo.png"
 import {auth,provider} from "./firebase"
 function App() {
@@ -15,6 +15,13 @@ function App() {
       alert(error.message);
     })
   }
+  useEffect(() => {
+    const user = JSON.parse(window.localStorage.getItem("current-user"));
+    setUser(user);
+ },[])
+ useEffect(()=>{
+     window.localStorage.setItem("current-user",JSON.stringify(user));
+ })
   return (
     <>
     {

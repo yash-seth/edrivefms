@@ -33,7 +33,6 @@ function Data(props) {
 
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
-
     const deleteFile = (filename, fileURL) => {
         setDeleting(true);
         console.log(`File ${filename} was deleted`);
