@@ -15,13 +15,23 @@ import { db, storage } from '../firebase';
 function Sidebar(props) {
     const [open, setOpen] = useState(false);
     const [uploading, setUploading]= useState(false);
+    const [creating, setCreating] = useState(false);
     const [file, setFile] = useState(null);
-    console.log(props.userData.uid);
-    const handleClose=()=>{
+    const [modalState, setModalState] = useState(false);
+    const [folderName, setFolderName] = useState("");
+
+    const handleClose = () => {
         setOpen(false);
+        setModalState(false)
     }
     const handleOpen=()=>{
         setOpen(true);
+    }
+    const openModal = () => {
+        setModalState(true);
+    }
+    const closeModal = () => {
+        setModalState(false);
     }
     const handleChange=(e)=>{
         if(e.target.files[0])
@@ -50,6 +60,22 @@ function Sidebar(props) {
             })
 
     }
+
+    const handleCreateFolder = () => {
+        setCreating(true);
+        setFolderName(folderName);
+        console.log(`Folder '${folderName}' was created!`);
+        setFolderName("");
+        setTimeout(function() {
+            setCreating(false);
+            setModalState(false);
+          }, 2000);
+    }
+
+    const handleFolderNameChange = (e) => {
+        setFolderName(e.target.value);
+    }
+
     return (
         <>
         <Modal open ={open} onClose={handleClose}>
@@ -70,12 +96,36 @@ function Sidebar(props) {
                     </form>
                 </div>
         </Modal>
+        <Modal open={modalState} onClose={closeModal}>
+                <div className="modal_pop">
+                    <form>
+                        <div className="modalHeading">
+                            <h3>Create Folder</h3>
+                        </div>
+                        <div className="modalBody">
+                            {
+                                creating ? (<p className="uploading">Creating</p>) : (
+                                    <>
+                                        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter the Folder name here&nbsp;&nbsp;</label>
+                                        <input type="input" value={folderName} onChange={handleFolderNameChange} />
+                                        
+                                        <input type="submit" value="Create" className="post_submit" onClick={handleCreateFolder} />
+                                    </>)
+                            }
+                        </div>
+                    </form>
+                </div>
+            </Modal>
         <div className="sidebar">
             <div className="sidebar_btn">
                 <button onClick={handleOpen}>
                     <img src={addlogo} alt=""></img>
                     <span>New</span>
                 </button>
+                <button onClick={openModal}>
+                        <img src={addlogo} alt=""></img>
+                        <span>New Folder</span>
+                    </button>
             </div>
             <div className="sidebar__options">
                 <div className="sidebar__option sidebaroptionActive">
