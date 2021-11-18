@@ -33,7 +33,7 @@ border-radius: 5px;
 .data_file svg{
     background-color: transparent;
     font-size:60px;
-    color: gray;
+    color:rgb(72, 73, 73);
 }
 .data_file p{
     border-top:1px solid #ccc;
@@ -58,7 +58,7 @@ border-radius: 5px;
 .detailsrow p svg{
     font-size: 22px;
     margin:10px;
-    color:rgb(70, 71, 71);
+    color:rgb(72, 73, 73);
     background-color: transparent;
 
 }
