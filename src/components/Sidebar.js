@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import "../css/sidebar.css"
 import addlogo from "../addfile.png"
+import addfile from "../newfile.ico"
 import MobileScreenShareIcon from '@mui/icons-material/MobileScreenShare';
 import DevicesIcon from '@mui/icons-material/Devices';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
@@ -102,8 +103,8 @@ function Sidebar(props) {
                             {
                                 creating ? (<p className="uploading">Creating</p>) : (
                                     <>
-                                        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter the Folder name here&nbsp;&nbsp;</label>
-                                        <input type="input" value={folderName} onChange={handleFolderNameChange} />
+                                        <label className="headtext">Enter the Folder name here</label>
+                                        <input className="headtext" type="input" value={folderName} onChange={handleFolderNameChange} />
 
                                         <input type="submit" value="Create" className="post_submit" onClick={handleCreateFolder} />
                                     </>)
@@ -115,8 +116,8 @@ function Sidebar(props) {
             <div className="sidebar">
                 <div className="sidebar_btn">
                     <button onClick={handleOpen}>
-                        <img src={addlogo} alt=""></img>
-                        <span>New</span>
+                        <img src={addfile} alt=""></img>
+                        <span>New File___</span>
                     </button>
                     <button onClick={openModal}>
                         <img src={addlogo} alt=""></img>

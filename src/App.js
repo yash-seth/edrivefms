@@ -36,6 +36,7 @@ function App() {
     ):(
         <div className="loginwrap">
           <img src={gdrivelogo} alt="img"/>
+          <p className="head">E-Drive - A File Management System</p>
           <button onClick={signIn}>Login to E-Drive</button>
         </div>
       )

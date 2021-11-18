@@ -31,6 +31,7 @@ padding:10px 0px 0px 0px;
 border-radius: 5px;
 }
 .data_file svg{
+    background-color: transparent;
     font-size:60px;
     color: gray;
 }
@@ -57,5 +58,30 @@ border-radius: 5px;
 .detailsrow p svg{
     font-size: 22px;
     margin:10px;
-    color:rgb(36, 140, 238);
+    color:rgb(70, 71, 71);
+    background-color: transparent;
+
+}
+.Yes{
+    margin-top: 5px;
+    margin-left:190px;
+    margin-bottom: 5px;
+    padding:0px 5px;
+    border-radius: 5px;
+    background-color: transparent;
+    border: 2px solid rgb(74, 120, 247);
+}
+.No{
+    margin-top: 5px;
+    margin-left:10px;
+    margin-bottom: 5px;
+    padding:0px 5px;
+    border-radius: 5px;
+    background-color: transparent;
+    border: 2px solid rgb(248, 90, 51);
+}
+.delete{
+    background-color: transparent;
+    border-radius: 5px;
+    border:1px solid rgb(249, 250, 252);
 }

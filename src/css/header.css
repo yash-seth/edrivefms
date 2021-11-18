@@ -36,8 +36,9 @@
 }
 
 .header__icons span{
-    margin-left: 20px;
+    margin-left: 10px;
     display:flex;
     align-items: center;
     
 }
+

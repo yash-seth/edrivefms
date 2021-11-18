@@ -7,13 +7,13 @@
 }
 .sidebar_btn button{
     background-color: transparent;
-    border: 1px solid rgb(240, 229, 229);
+    border: 2px solid rgb(74, 120, 247);
     display: flex;
     align-items: center;
     border-radius: 40px;
-    padding: 5px 10px;
+    padding: 3px 10px;
     margin-left: 20px;
-    box-shadow: 2px 2px 2px;
+    margin-bottom: 10px;
 }
 .sidebar_btn button span{
     font-size: 16px;
@@ -117,4 +117,12 @@ input.post_submit{
     color:#fff;
     margin:20px 40px;
 
+}
+.headtext{
+    font-size: 13;
+    display: flex;
+    margin-left:120px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
 }

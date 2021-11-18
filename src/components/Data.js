@@ -95,7 +95,7 @@ function Data(props) {
                                 <p>{file.data.username}</p>
                                 <p>{new Date(file.data.timestamp?.seconds * 1000).toUTCString()}</p>
                                 <p>{formatBytes(file.data.size)}</p>
-                                <p><button onClick={() => setDeleteModalState(true)}><DeleteIcon /></button></p>
+                                <div className="del"><p><button className="delete" onClick={() => setDeleteModalState(true)}><DeleteIcon /></button></p></div>
                                 <Modal open={deleteModalState} onClose={handleClose}>
                                     <div className="modal_pop">
                                         <form>
@@ -105,12 +105,9 @@ function Data(props) {
                                             <div className="modalBody">
                                                 {
                                                     deleting ? (<p className="uploading">Deleting</p>) : (
-                                                        <>  <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                            <button onClick={() => deleteFile(file.data.filename, file.data.fileURL)}>Yes</button>
-                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                            <button onClick={() => setDeleteModalState(false)}>No</button>
+                                                        <>  <label>
+                                                            <button className="Yes" onClick={() => deleteFile(file.data.filename, file.data.fileURL)}>Yes</button>
+                                                            <button className="No" onClick={() => setDeleteModalState(false)}>No</button>
                                                         </label>
                                                         </>)
                                                 }
