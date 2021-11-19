@@ -117,7 +117,7 @@ function Sidebar(props) {
                 <div className="sidebar_btn">
                     <button onClick={handleOpen}>
                         <img src={addfile} alt=""></img>
-                        <span>New File___</span>
+                        <span>New File</span>
                     </button>
                     <button onClick={openModal}>
                         <img src={addlogo} alt=""></img>

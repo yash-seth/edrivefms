@@ -10,7 +10,6 @@ function App() {
   const signIn=()=>{
     auth.signInWithPopup(provider).then(({user})=>{
       setUser(user);
-      console.log(user);
     }).catch(error=>{
       alert(error.message);
     })

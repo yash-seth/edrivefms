@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
 import "../css/header.css"
 import gdrivelogo from "../glogo.png"
 import SearchIcon from '@mui/icons-material/Search';
@@ -8,7 +9,15 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import AppsIcon from '@mui/icons-material/Apps';
 import { Avatar } from '@mui/material';
 
-function header(props) {
+function Header(props) {
+    const[searchInput,setSearchInput] = useState("");
+    const search =()=>{
+        console.log(`search for ${searchInput} was made.`);
+        setSearchInput("");
+    }
+    const handleSearchField = (e) => {
+        setSearchInput(e.target.value);
+    }
     return (
         <div className="header">
            
@@ -17,8 +26,8 @@ function header(props) {
             <span>E-Drive </span>
             </div>
             <div className="header__search">
-           <SearchIcon/>
-            <input type="text" placeholder="search in drive"/>
+           <button onClick={search}><SearchIcon/></button>
+            <input value = {searchInput} type="text" placeholder="search in drive" onChange={handleSearchField}/>
            <FormatAlignCenterIcon/>
             </div>
             <div className="header__icons">  
@@ -36,4 +45,4 @@ function header(props) {
     )
 }
 
-export default header
+export default Header
