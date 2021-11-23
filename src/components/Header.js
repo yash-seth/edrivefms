@@ -45,10 +45,14 @@ function Header(props) {
             <div className="header__icons">  
                 <span>
                     <HelpOutlineIcon/>
+                </span>
+                <span id="SettingsIcon">
                     <SettingsIcon/>
                 </span>
                 <span>
                     <AppsIcon/>
+                </span>
+                <span>
                     <Avatar src={props.photoURL}/>
                 </span>
             </div>
