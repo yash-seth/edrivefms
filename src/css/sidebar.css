@@ -1,28 +1,42 @@
 .sidebar{
     margin-top: 10px;
-    
+    /* background-color: chartreuse; */
+    height: 826px;
+    align-content: center;
 }
 .sidebar_btn img{
-    width:40px;
+    width:24px;
+    height:24px;
 }
 .sidebar_btn button{
     background-color: transparent;
     border: 2px solid rgb(74, 120, 247);
     display: flex;
+    width: 200px;
+    height: 50px;
     align-items: center;
     border-radius: 40px;
-    padding: 3px 10px;
-    margin-left: 20px;
-    margin-bottom: 10px;
+    padding-left: 25px;
+    margin-left: 25px;
+    margin-bottom: 25px;
+    margin-top: 15px;
 }
 .sidebar_btn button span{
     font-size: 16px;
     margin-right: 20px;
-    margin-left: 10px;
+    margin-left: 15px;
+    font-weight: 400;
 }
-.sidebar_btn img:hover{
+.sidebar_btn button:hover{
+    font-size: 18px;
+    margin-right: 20px;
+    margin-left: 25px;
+    transform: scale(1.03);
+    transition: all;
+}
+.sidebar_btn img:hover {
     cursor: pointer;
-    width:45px;
+    width:30px;
 }
 .sidebar__option{
     margin-top: 10px;

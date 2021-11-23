@@ -43,14 +43,21 @@ function Header(props) {
            <FormatAlignCenterIcon/>
             </div>
             <div className="header__icons">  
-                <span>
-                    <HelpOutlineIcon/>
-                    <SettingsIcon/>
-                </span>
-                <span>
-                    <AppsIcon/>
-                    <Avatar src={props.photoURL}/>
-                </span>
+                    <span id="HelpIcon">
+                        <HelpOutlineIcon/>
+                    </span>
+
+                    <span id="SettingsIcon">
+                        <SettingsIcon/>
+                    </span>
+                    
+                    <span id="AppsIcon">
+                        <AppsIcon/>
+                    </span>
+                    
+                    <span id="Avatar">
+                        <Avatar src={props.photoURL}/>
+                    </span>
             </div>
 
         </div>
