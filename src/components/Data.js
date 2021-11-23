@@ -45,7 +45,7 @@ function Data(props) {
         setTimeout(() => {
             setDeleteModalfileURL(null);
             setDeleting(false);
-        }, 3500);
+        }, 2800);
     }
 
     const handleClose = () => {
