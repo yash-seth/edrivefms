@@ -52,7 +52,84 @@ function Data(props) {
         setDeleteModalState(false)
     }
 
-    return (
+    return props.searchState ? 
+    (
+        <div className="data">
+            <div className="data__header">
+                <div className="data__headerLeft">
+                    <p>My Drive</p>
+                    <ArrowDropDownIcon />
+                </div>
+                <div className="data__headerRight">
+                    <ListIcon />
+                    <InfoOutlinedIcon />
+                </div>
+            </div>
+            <div className="data__content">
+                <div className="data_grid">
+                    {
+                        files.map((file) => {
+                            return file.data.filename.toLowerCase().includes(String(props.searchValue))? <>
+                            <a href={file.data.fileURL} target="_blank">
+                                <div className="data_file">
+                                
+                                    <InsertDriveFileIcon />
+                                    <p>{file.data.filename}</p>
+                                </div>
+                                </a>
+                            </>:null
+                        })
+                    }
+
+
+                </div>
+                <div className="data_list">
+                    <div className="detailsrow">
+                        <p><b>Name <ArrowDownwardIcon /></b></p>
+                        <p><b>Owner</b></p>
+                        <p><b>Created At</b></p>
+                        <p><b>File Size</b></p>
+                        <p></p>
+                    </div>
+                    {
+                        files.map((file) => {
+                            return file.data.filename.toLowerCase().includes(String(props.searchValue))? <div className="detailsrow">
+                                <p> <a href={file.data.fileURL} target="_blank">
+                                    <InsertDriveFileIcon />{file.data.filename}</a></p>
+                                <p>{file.data.username}</p>
+                                <p>{new Date(file.data.timestamp?.seconds * 1000).toUTCString()}</p>
+                                <p>{formatBytes(file.data.size)}</p>
+                                <div className="del"><p><button className="delete" onClick={() => setDeleteModalState(true)}><DeleteIcon /></button></p></div>
+                                <Modal open={deleteModalState} onClose={handleClose}>
+                                    <div className="modal_pop">
+                                        <form>
+                                            <div className="modalHeading">
+                                                <h3>Confirm Delete Operation?</h3>
+                                            </div>
+                                            <div className="modalBody">
+                                                {
+                                                    deleting ? (<p className="uploading">Deleting</p>) : (
+                                                        <>  <label>
+                                                            <button className="Yes" onClick={() => deleteFile(file.data.filename, file.data.fileURL)}>Yes</button>
+                                                            <button className="No" onClick={() => setDeleteModalState(false)}>No</button>
+                                                        </label>
+                                                        </>)
+                                                }
+                                            </div>
+                                        </form>
+                                    </div>
+                                </Modal>
+                            </div> : null
+                        })
+                    }
+
+                </div>
+
+            </div>
+        </div>
+    )
+    :
+    (
         <div className="data">
             <div className="data__header">
                 <div className="data__headerLeft">
@@ -69,10 +146,13 @@ function Data(props) {
                     {
                         files.map((file) => {
                             return <>
+                            <a href={file.data.fileURL} target="_blank">
                                 <div className="data_file">
+                                
                                     <InsertDriveFileIcon />
-                                    <p><a href={file.data.fileURL} target="_blank">{file.data.filename}</a></p>
+                                    <p>{file.data.filename}</p>
                                 </div>
+                                </a>
                             </>
                         })
                     }
