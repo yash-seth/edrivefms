@@ -6,8 +6,8 @@ import MobileScreenShareIcon from '@mui/icons-material/MobileScreenShare';
 import DevicesIcon from '@mui/icons-material/Devices';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import QueryBuilderOutlinedIcon from '@mui/icons-material/QueryBuilderOutlined';
-import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+// import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
+// import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import CloudQueueIcon from '@mui/icons-material/CloudQueue';
 import { Modal } from '@mui/material';
 import firebase from "firebase";
@@ -20,6 +20,7 @@ function Sidebar(props) {
     const [file, setFile] = useState(null);
     const [modalState, setModalState] = useState(false);
     const [folderName, setFolderName] = useState("");
+    // const [currfolder, setcurrfolder] = useState(""); // this will have the current directory of the 
     const handleClose = () => {
         setOpen(false);
         setModalState(false)
@@ -62,6 +63,8 @@ function Sidebar(props) {
     const handleCreateFolder = () => {
         setCreating(true);
         setFolderName(folderName);
+        // here implement the folder creation part
+
         console.log(`Folder '${folderName}' was created!`);
         setFolderName("");
         setTimeout(function () {
@@ -85,7 +88,7 @@ function Sidebar(props) {
                             {
                                 uploading ? (<p className="uploading">Uploading</p>) : (
                                     <>
-                                        <input type="file" onChange={handleChange} />
+                                        <input className="file" type="file" onChange={handleChange} />
                                         <input type="submit" value="UPLOAD" className="post_submit" onClick={handleUpload} />
                                     </>)
                             }

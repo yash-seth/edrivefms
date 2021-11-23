@@ -140,3 +140,9 @@ input.post_submit{
     margin-bottom: 10px;
     border-radius: 5px;
 }
+.file{
+    margin-top:15px;
+    margin-left: 30px;
+    border-radius: 8px;
+    color:rgb(34, 65, 247);
+}
