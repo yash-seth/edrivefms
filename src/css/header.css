@@ -1,27 +1,52 @@
 .header{
     display:grid;
     grid-template-columns: 300px auto 200px;
-    align-items: center;
-    padding: 5px 20px;
-    height:60px;
+    align-items: flex;
+    height: 80px;
+    width: 100%;
+    /* background-color: chartreuse; */
+    padding-top: 20px;
+    padding-left: 1%;
+    padding-right: 25px;    
     border-bottom: 1px solid light gray;
+    margin-bottom: 15px;
+    position: relative;
+}
+.header__logo{
+    /* background-color:turquoise; */
+    padding-left: 6%;
+    vertical-align: middle;
 }
 .header__logo img{
     width:40px;
-    align-items: center;
+    padding-top: 8px;
 }
 .header__logo span{
-    font-size: 36px;
-    margin-left: 10px;
+    font-size: 31px;   /*previous value 36px*/
     color:gray;
+    padding-left: 15px;
+    vertical-align: top;
 }
 .header__search{
     display:flex;
     align-items: center;
-    width:700px;
+    width: 55%;
+    height: 50px;
     background-color: whitesmoke;
     padding:12px;
     border-radius: 10px;
+    margin-left: 20%;
+    margin-right: 10%;
+    min-width: 500px;
+    /* background-color: tomato; */
+}
+.header__search button{
+    background-color: transparent;
+    border: transparent;
+}
+.AlignIcon{
+    margin-left: 10%;
+    position: inherit;
 }
 .header__search input{
     background-color: transparent;
@@ -31,23 +56,42 @@
 }
 .header__icons{
     display:flex;
+    align-self: start;
     align-items: center;
-    margin:0px 10px 0px 10px;
+    /* background-color: tomato; */
 }
 
 .header__icons span{
-    margin-left: 10px;
     display:flex;
     align-items: center;
-    
+    /* background-color: tomato; */
+    margin-left: 10px;
+}
+.header__icons span:hover{
+    transform: scale(1.2);
+    cursor: pointer;
 }
 
-.header__search button{
-    background-color: transparent;
-    border-radius: 5px;
-    border:1px solid rgb(249, 250, 252);
+#SettingsIcon{
+    display:flex;
+    align-items: center;
+    margin-left: 10px;
 }
 
-.header__search button{
-    border:none;
+#SettingsIcon:hover{
+    transform: rotate(45deg) scale(1.2);
+    transition-duration: 0.5s;
+    cursor: pointer;
+}
+
+#Avatar{
+    display:flex;
+    align-items: center;
+    margin-left: 25px;
+    margin-right: 6%;
+}
+
+#Avatar:hover{
+    transform: scale(1.1);
+    transition-duration: 0.5s;
 }
