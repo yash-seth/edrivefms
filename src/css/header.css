@@ -47,3 +47,7 @@
     border-radius: 5px;
     border:1px solid rgb(249, 250, 252);
 }
+
+.header__search button{
+    border:none;
+}

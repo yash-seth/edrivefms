@@ -153,9 +153,11 @@ function Sidebar(props) {
                         <span>6.45 GB of 15GB used</span>
                     </div>
                 </div>
+                <buttton onClick={() => props.loginState(null)}>
                 <div className="sidebar_btn logout">
-                    <buttton onClick={() => props.loginState(null)}>Logout</buttton>
+                    Logout
                 </div>
+                </buttton>
             </div>
         </>
 

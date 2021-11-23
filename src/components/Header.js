@@ -8,13 +8,24 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AppsIcon from '@mui/icons-material/Apps';
 import { Avatar } from '@mui/material';
+import { db, storage } from '../firebase';
+import CloseIcon from '@mui/icons-material/Close';
 
 function Header(props) {
     const[searchInput,setSearchInput] = useState("");
     const search =()=>{
         console.log(`search for ${searchInput} was made.`);
-        setSearchInput("");
+        if(searchInput!=="") {
+        props.setsearchState(true);
+        props.setsearchValue(searchInput);
+        }
     }
+
+    const clearSearch=() =>{
+        setSearchInput("");
+        props.setsearchState(false);
+    }
+
     const handleSearchField = (e) => {
         setSearchInput(e.target.value);
     }
@@ -28,6 +39,7 @@ function Header(props) {
             <div className="header__search">
            <button onClick={search}><SearchIcon/></button>
             <input value = {searchInput} type="text" placeholder="search in drive" onChange={handleSearchField}/>
+            {(searchInput==="")?null:<button onClick={clearSearch}><CloseIcon/></button>}
            <FormatAlignCenterIcon/>
             </div>
             <div className="header__icons">  
