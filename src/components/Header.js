@@ -40,7 +40,7 @@ function Header(props) {
            <button onClick={search}><SearchIcon/></button>
             <input value = {searchInput} type="text" placeholder="search in drive" onChange={handleSearchField}/>
             {(searchInput==="")?null:<button onClick={clearSearch}><CloseIcon/></button>}
-           <FormatAlignCenterIcon/>
+           <FormatAlignCenterIcon className="AlignIcon"/>
             </div>
             <div className="header__icons">  
                 <span>
