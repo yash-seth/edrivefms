@@ -120,7 +120,7 @@ function Sidebar(props) {
                 <div className="sidebar_btn">
                     <button onClick={handleOpen}>
                         <img src={addfile} alt=""></img>
-                        <span>New File___</span>
+                        <span>New File</span>
                     </button>
                     <button onClick={openModal}>
                         <img src={addlogo} alt=""></img>
@@ -156,9 +156,11 @@ function Sidebar(props) {
                         <span>6.45 GB of 15GB used</span>
                     </div>
                 </div>
+                <buttton onClick={() => props.loginState(null)}>
                 <div className="sidebar_btn logout">
-                    <buttton onClick={() => props.loginState(null)}>Logout</buttton>
+                    Logout
                 </div>
+                </buttton>
             </div>
         </>
 

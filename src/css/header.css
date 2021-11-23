@@ -1,19 +1,20 @@
 .header{
     display:grid;
-    grid-template-columns: 300px auto 250px;
+    grid-template-columns: 300px auto 200px;
     align-items: flex;
     height: 80px;
+    width: 100%;
     /* background-color: chartreuse; */
     padding-top: 20px;
-    padding-left: 10px;
-    padding-right: 25px;
+    padding-left: 1%;
+    padding-right: 25px;    
     border-bottom: 1px solid light gray;
     margin-bottom: 15px;
     position: relative;
 }
 .header__logo{
     /* background-color:turquoise; */
-    padding-left: 35px;
+    padding-left: 6%;
     vertical-align: middle;
 }
 .header__logo img{
@@ -29,14 +30,23 @@
 .header__search{
     display:flex;
     align-items: center;
-    width:700px;
+    width: 55%;
     height: 50px;
     background-color: whitesmoke;
     padding:12px;
     border-radius: 10px;
-    margin-left: 200px;
-    margin-right: 100px;
+    margin-left: 20%;
+    margin-right: 10%;
+    min-width: 500px;
     /* background-color: tomato; */
+}
+.header__search button{
+    background-color: transparent;
+    border: transparent;
+}
+.AlignIcon{
+    margin-left: 10%;
+    position: inherit;
 }
 .header__search input{
     background-color: transparent;
@@ -78,6 +88,7 @@
     display:flex;
     align-items: center;
     margin-left: 25px;
+    margin-right: 6%;
 }
 
 #Avatar:hover{

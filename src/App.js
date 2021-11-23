@@ -7,10 +7,11 @@ import gdrivelogo from "./glogo.png"
 import {auth,provider} from "./firebase"
 function App() {
   const [user, setUser] = useState(null);
+  const [searchState, setsearchState] = useState(false);
+  const [searchValue,setSearchValue] = useState("");
   const signIn=()=>{
     auth.signInWithPopup(provider).then(({user})=>{
       setUser(user);
-      console.log(user);
     }).catch(error=>{
       alert(error.message);
     })
@@ -27,10 +28,10 @@ function App() {
     {
       user ? (
         <>
-    <Header photoURL = {user.photoURL} loginState={setUser}/>
+    <Header photoURL = {user.photoURL} loginState={setUser} userData={user} searchState={searchState} setsearchState={setsearchState} searchValue={searchValue} setsearchValue={setSearchValue}/>
     <div className="App">
       <Sidebar loginState={setUser} userData={user}/>
-      <Data loginState={setUser} userData={user}/>
+      <Data loginState={setUser} userData={user} searchState={searchState} setsearchState={setsearchState} searchValue={searchValue}/>
     </div>
     </>
     ):(
