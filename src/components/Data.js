@@ -11,7 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 function Data(props) {
     const [files, setFiles] = useState([]);
-    const [deleteModalState, setDeleteModalState] = useState(false);
+    const [deleteModalfileURL, setDeleteModalfileURL] = useState(null);
     const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
@@ -43,13 +43,13 @@ function Data(props) {
             });
         });
         setTimeout(() => {
-            setDeleteModalState(false);
+            setDeleteModalfileURL(null);
             setDeleting(false);
-        }, 3500);
+        }, 2800);
     }
 
     const handleClose = () => {
-        setDeleteModalState(false)
+        setDeleteModalfileURL(null)
     }
 
     return props.searchState ? 
@@ -99,8 +99,8 @@ function Data(props) {
                                 <p>{file.data.username}</p>
                                 <p>{new Date(file.data.timestamp?.seconds * 1000).toUTCString()}</p>
                                 <p>{formatBytes(file.data.size)}</p>
-                                <div className="del"><p><button className="delete" onClick={() => setDeleteModalState(true)}><DeleteIcon /></button></p></div>
-                                <Modal open={deleteModalState} onClose={handleClose}>
+                                <div className="del"><p><button className="delete" onClick={() => setDeleteModalfileURL(file.data.fileURL)}><DeleteIcon /></button></p></div>
+                                <Modal open={file.data.fileURL===deleteModalfileURL} onClose={handleClose}>
                                     <div className="modal_pop">
                                         <form>
                                             <div className="modalHeading">
@@ -111,7 +111,7 @@ function Data(props) {
                                                     deleting ? (<p className="uploading">Deleting</p>) : (
                                                         <>  <label>
                                                             <button className="Yes" onClick={() => deleteFile(file.data.filename, file.data.fileURL)}>Yes</button>
-                                                            <button className="No" onClick={() => setDeleteModalState(false)}>No</button>
+                                                            <button className="No" onClick={() => setDeleteModalfileURL(null)}>No</button>
                                                         </label>
                                                         </>)
                                                 }
@@ -175,8 +175,8 @@ function Data(props) {
                                 <p>{file.data.username}</p>
                                 <p>{new Date(file.data.timestamp?.seconds * 1000).toUTCString()}</p>
                                 <p>{formatBytes(file.data.size)}</p>
-                                <div className="del"><p><button className="delete" onClick={() => setDeleteModalState(true)}><DeleteIcon /></button></p></div>
-                                <Modal open={deleteModalState} onClose={handleClose}>
+                                <div className="del"><p><button className="delete" onClick={() => setDeleteModalfileURL(file.data.fileURL)}><DeleteIcon /></button></p></div>
+                                <Modal open={file.data.fileURL===deleteModalfileURL} onClose={handleClose}>
                                     <div className="modal_pop">
                                         <form>
                                             <div className="modalHeading">
@@ -187,7 +187,7 @@ function Data(props) {
                                                     deleting ? (<p className="uploading">Deleting</p>) : (
                                                         <>  <label>
                                                             <button className="Yes" onClick={() => deleteFile(file.data.filename, file.data.fileURL)}>Yes</button>
-                                                            <button className="No" onClick={() => setDeleteModalState(false)}>No</button>
+                                                            <button className="No" onClick={() => setDeleteModalfileURL(false)}>No</button>
                                                         </label>
                                                         </>)
                                                 }
