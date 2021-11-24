@@ -49,9 +49,9 @@ function Data(props) {
             });
         });
         setTimeout(() => {
-            setDeleteModalState(false);
+            setDeleteModalState(null);
             setDeleting(false);
-        }, 3500);
+        }, 2800);
     }
 
     const handleClose = () => {
@@ -130,7 +130,6 @@ function Data(props) {
                                                     sharing ? (<p className="uploading">Copying to Clipboard</p>) : (
                                                         <> <label>
                                                             <input className="link" type ="text" value={shareModalState} disabled/>
-                                                            {console.log(`${file.data.fileURL},${shareModalState}`)}
                                                             <CopyToClipboard text={shareModalState}><button className="delete" onClick={ ()=> CopyClipboard()}><ContentCopyIcon/></button></CopyToClipboard>
                                                             <button className="Close" onClick={() => setshareModalState(false)}>Close</button>
                                                             </label>
@@ -153,7 +152,7 @@ function Data(props) {
                                                     deleting ? (<p className="uploading">Deleting</p>) : (
                                                         <>  <label>
                                                             <button className="Yes" onClick={() => deleteFile(file.data.filename, file.data.fileURL)}>Yes</button>
-                                                            <button className="No" onClick={() => setDeleteModalState(false)}>No</button>
+                                                            <button className="No" onClick={() => setDeleteModalState(null)}>No</button>
                                                         </label>
                                                         </>)
                                                 }
@@ -231,7 +230,6 @@ function Data(props) {
                                                     sharing ? (<p className="uploading">Copying to Clipboard</p>) : (
                                                         <> <label>
                                                             <input className="link" type ="text" value={shareModalState} disabled/>
-                                                            {console.log(`${file.data.fileURL},${shareModalState}`)}
                                                             <CopyToClipboard text={shareModalState}><button className="delete" onClick={ ()=> CopyClipboard()}><ContentCopyIcon/></button></CopyToClipboard>
                                                             <button className="Close" onClick={() => setshareModalState(false)}>Close</button>
                                                             </label>
@@ -261,8 +259,7 @@ function Data(props) {
                                             </div>
                                         </form>
                                     </div>
-                                </Modal>
-                                
+                                </Modal>  
                             </div>
                         })
                     }
