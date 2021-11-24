@@ -8,6 +8,26 @@ const firebaseConfig = {
     appId: "1:37814276828:web:65733372d919cec3fada19"
   };
 
+// function listAll(folder)
+// {
+//   const storageRef = firebase.storage().ref();
+
+//   var listRef = storageRef.child(folder);
+
+//   listRef.listAll().then((res)=>{
+//     res.prefixes.forEach((folderRef)=>{
+
+//     });
+//     res.items.forEach((itemRef)=>{
+//       itemRef.getDownloadURL().then((url)=>{
+//         console.log("download url:"+url);
+//       });
+//     });
+//   })
+//   .catch((error)=>{
+//     console.log(error);
+//   });
+// }
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 const db = firebaseApp.firestore();

@@ -52,6 +52,7 @@ border-radius: 5px;
 .detailsrow p{
     display: flex;
     align-items: center;
+    justify-content: space-evenly;
     font-size: 13px;
     padding : 0px 10px;
 }
@@ -63,7 +64,7 @@ border-radius: 5px;
 
 }
 .Yes{
-    margin-top: 5px;
+    margin-top: 10px;
     margin-left:190px;
     margin-bottom: 5px;
     padding:0px 5px;
@@ -72,7 +73,7 @@ border-radius: 5px;
     border: 2px solid rgb(58, 219, 58);
 }
 .No{
-    margin-top: 5px;
+    margin-top: 10px;
     margin-left:10px;
     margin-bottom: 5px;
     padding:0px 5px;
@@ -84,4 +85,23 @@ border-radius: 5px;
     background-color: transparent;
     border-radius: 5px;
     border:1px solid rgb(249, 250, 252);
+}
+.link{
+    margin:5px 5px;
+    color:blue;
+    border-radius: 5px;
+    border: 1px solid blueviolet;
+    width:85%;
+}
+.Close{
+    margin-top: 10px;
+    margin-left:200px;
+    margin-bottom: 5px;
+    padding:0px 5px;
+    justify-content: space-between;
+    border-radius: 5px;
+    background-color: transparent;
+    background-color: red;
+    color:white;
+    font-size: 15;
 }

@@ -5,14 +5,20 @@ import ListIcon from '@mui/icons-material/List';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import { db, storage } from '../firebase';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import ShareIcon from '@mui/icons-material/Share';
+import { db } from '../firebase';
 import { Modal } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+
 
 function Data(props) {
     const [files, setFiles] = useState([]);
-    const [deleteModalfileURL, setDeleteModalfileURL] = useState(null);
+    const [deleteModalState, setDeleteModalState] = useState(null);
     const [deleting, setDeleting] = useState(false);
+    const [shareModalState, setshareModalState] = useState(null);
+    const [sharing, setsharing] = useState(false);
 
     useEffect(() => {
         db.collection(`${props.userData.displayName}`).onSnapshot(snapshot => {
@@ -43,13 +49,24 @@ function Data(props) {
             });
         });
         setTimeout(() => {
-            setDeleteModalfileURL(null);
+            setDeleteModalState(null);
             setDeleting(false);
         }, 2000);
     }
 
     const handleClose = () => {
-        setDeleteModalfileURL(null)
+        setDeleteModalState(false);
+    }
+    const shareClose = () => {
+        setshareModalState(null);
+    }
+    const CopyClipboard = () =>{
+        setsharing(true);
+        setTimeout(()=>{
+            setshareModalState(null);
+            setsharing(false);
+        },2000);
+
     }
 
     return props.searchState ? 
@@ -89,7 +106,8 @@ function Data(props) {
                         <p><b>Owner</b></p>
                         <p><b>Created At</b></p>
                         <p><b>File Size</b></p>
-                        <p></p>
+                        <p><b>Share</b></p>
+                        <p><b>Delete</b></p>
                     </div>
                     {
                         files.map((file) => {
@@ -99,8 +117,31 @@ function Data(props) {
                                 <p>{file.data.username}</p>
                                 <p>{new Date(file.data.timestamp?.seconds * 1000).toUTCString()}</p>
                                 <p>{formatBytes(file.data.size)}</p>
-                                <div className="del"><p><button className="delete" onClick={() => setDeleteModalfileURL(file.data.fileURL)}><DeleteIcon /></button></p></div>
-                                <Modal open={file.data.fileURL===deleteModalfileURL} onClose={handleClose}>
+                                <p><button className="delete" onClick={() => setshareModalState(file.data.fileURL)}><ShareIcon/></button></p>
+                                
+                                <Modal open={file.data.fileURL===shareModalState} onClose ={shareClose}>
+                                    <div className="modal_pop">
+                                        <form>
+                                            <div className="modalHeading">
+                                                <h3>Copy the Below Link to Share !!</h3>
+                                            </div>
+                                            <div className="modalBody">
+                                                {
+                                                    sharing ? (<p className="uploading">Copying to Clipboard</p>) : (
+                                                        <> <label>
+                                                            <input className="link" type ="text" value={shareModalState} disabled/>
+                                                            <CopyToClipboard text={shareModalState}><button className="delete" onClick={ ()=> CopyClipboard()}><ContentCopyIcon/></button></CopyToClipboard>
+                                                            <button className="Close" onClick={() => setshareModalState(false)}>Close</button>
+                                                            </label>
+                                                        </>)
+                                                }
+                                            </div>
+                                            
+                                        </form>
+                                    </div>    
+                                </Modal>
+                                <div className="del"><p><button className="delete" onClick={() => setDeleteModalState(file.data.fileURL)}><DeleteIcon /></button></p></div>
+                                <Modal open={file.data.fileURL===deleteModalState} onClose={handleClose}>
                                     <div className="modal_pop">
                                         <form>
                                             <div className="modalHeading">
@@ -111,7 +152,7 @@ function Data(props) {
                                                     deleting ? (<p className="uploading">Deleting</p>) : (
                                                         <>  <label>
                                                             <button className="Yes" onClick={() => deleteFile(file.data.filename, file.data.fileURL)}>Yes</button>
-                                                            <button className="No" onClick={() => setDeleteModalfileURL(null)}>No</button>
+                                                            <button className="No" onClick={() => setDeleteModalState(null)}>No</button>
                                                         </label>
                                                         </>)
                                                 }
@@ -165,18 +206,42 @@ function Data(props) {
                         <p><b>Owner</b></p>
                         <p><b>Created At</b></p>
                         <p><b>File Size</b></p>
-                        <p></p>
+                        <p><b>Share</b></p>
+                        <p><b>Delete</b></p>
                     </div>
                     {
                         files.map((file) => {
                             return <div className="detailsrow">
-                                <p> <a href={file.data.fileURL} target="_blank">
+                                <p> <a href={file.data.fileURL} target="_blank" rel="noreferrer">
                                     <InsertDriveFileIcon />{file.data.filename}</a></p>
                                 <p>{file.data.username}</p>
                                 <p>{new Date(file.data.timestamp?.seconds * 1000).toUTCString()}</p>
                                 <p>{formatBytes(file.data.size)}</p>
-                                <div className="del"><p><button className="delete" onClick={() => setDeleteModalfileURL(file.data.fileURL)}><DeleteIcon /></button></p></div>
-                                <Modal open={file.data.fileURL===deleteModalfileURL} onClose={handleClose}>
+                                <p><button className="delete" onClick={() => setshareModalState(file.data.fileURL)}><ShareIcon/></button></p>
+                                
+                                <Modal open={file.data.fileURL===shareModalState} onClose ={shareClose}>
+                                    <div className="modal_pop">
+                                        <form>
+                                            <div className="modalHeading">
+                                                <h3>Copy the Below Link to Share !!</h3>
+                                            </div>
+                                            <div className="modalBody">
+                                                {
+                                                    sharing ? (<p className="uploading">Copying to Clipboard</p>) : (
+                                                        <> <label>
+                                                            <input className="link" type ="text" value={shareModalState} disabled/>
+                                                            <CopyToClipboard text={shareModalState}><button className="delete" onClick={ ()=> CopyClipboard()}><ContentCopyIcon/></button></CopyToClipboard>
+                                                            <button className="Close" onClick={() => setshareModalState(false)}>Close</button>
+                                                            </label>
+                                                        </>)
+                                                }
+                                            </div>
+                                            
+                                        </form>
+                                    </div>    
+                                </Modal>
+                                <div className="del"><p><button className="delete" onClick={() => setDeleteModalState(file.data.fileURL)}><DeleteIcon /></button></p></div>
+                                <Modal open={file.data.fileURL===deleteModalState} onClose={handleClose}>
                                     <div className="modal_pop">
                                         <form>
                                             <div className="modalHeading">
@@ -187,14 +252,14 @@ function Data(props) {
                                                     deleting ? (<p className="uploading">Deleting</p>) : (
                                                         <>  <label>
                                                             <button className="Yes" onClick={() => deleteFile(file.data.filename, file.data.fileURL)}>Yes</button>
-                                                            <button className="No" onClick={() => setDeleteModalfileURL(false)}>No</button>
+                                                            <button className="No" onClick={() => setDeleteModalState(false)}>No</button>
                                                         </label>
                                                         </>)
                                                 }
                                             </div>
                                         </form>
                                     </div>
-                                </Modal>
+                                </Modal>  
                             </div>
                         })
                     }
