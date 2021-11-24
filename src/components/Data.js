@@ -55,7 +55,7 @@ function Data(props) {
     }
 
     const handleClose = () => {
-        setDeleteModalState(false);
+        setDeleteModalState(null);
     }
     const shareClose = () => {
         setshareModalState(null);
@@ -123,7 +123,7 @@ function Data(props) {
                                     <div className="modal_pop">
                                         <form>
                                             <div className="modalHeading">
-                                                <h3>Copy the Below Link to Share !!</h3>
+                                                <h3>Copy the Below Link to Share</h3>
                                             </div>
                                             <div className="modalBody">
                                                 {
@@ -223,7 +223,7 @@ function Data(props) {
                                     <div className="modal_pop">
                                         <form>
                                             <div className="modalHeading">
-                                                <h3>Copy the Below Link to Share !!</h3>
+                                                <h3>Copy the Below Link to Share</h3>
                                             </div>
                                             <div className="modalBody">
                                                 {
@@ -252,7 +252,7 @@ function Data(props) {
                                                     deleting ? (<p className="uploading">Deleting</p>) : (
                                                         <>  <label>
                                                             <button className="Yes" onClick={() => deleteFile(file.data.filename, file.data.fileURL)}>Yes</button>
-                                                            <button className="No" onClick={() => setDeleteModalState(false)}>No</button>
+                                                            <button className="No" onClick={() => setDeleteModalState(null)}>No</button>
                                                         </label>
                                                         </>)
                                                 }
