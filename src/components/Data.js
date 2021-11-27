@@ -14,12 +14,12 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 
 function Data(props) {
+    let totalBytes = 0;
     const [files, setFiles] = useState([]);
     const [deleteModalState, setDeleteModalState] = useState(null);
     const [deleting, setDeleting] = useState(false);
     const [shareModalState, setshareModalState] = useState(null);
     const [sharing, setsharing] = useState(false);
-
     useEffect(() => {
         db.collection(`${props.userData.displayName}`).onSnapshot(snapshot => {
             setFiles(snapshot.docs.map(doc => ({
@@ -28,18 +28,16 @@ function Data(props) {
             })))
         })
     }, [])
-
     function formatBytes(bytes, decimals = 2) {
         if (bytes === 0) return '0 Bytes';
-
         const k = 1024;
         const dm = decimals < 0 ? 0 : decimals;
         const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
-
+        if(props.searchState==false) props.settotalSize(totalBytes+=bytes);
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
-    const deleteFile = (filename, fileURL) => {
+    const deleteFile = (filename, fileURL,bytes) => {
         setDeleting(true);
         console.log(`File ${filename} was deleted`);
         var file_query = db.collection(`${props.userData.displayName}`).where('fileURL', '==', fileURL);
@@ -48,7 +46,15 @@ function Data(props) {
                 doc.ref.delete();
             });
         });
+        let i = 0;
         setTimeout(() => {
+            for(i=0;i<files.length;i++){
+                if(files[i]['data']['fileURL']===fileURL){
+                    files.splice(i, 1);
+                    break;
+                }
+            }  
+            if(files.length===0)props.settotalSize(0);
             setDeleteModalState(null);
             setDeleting(false);
         }, 2000);
@@ -151,7 +157,7 @@ function Data(props) {
                                                 {
                                                     deleting ? (<p className="uploading">Deleting</p>) : (
                                                         <>  <label>
-                                                            <button className="Yes" onClick={() => deleteFile(file.data.filename, file.data.fileURL)}>Yes</button>
+                                                            <button className="Yes" onClick={() =>{ deleteFile(file.data.filename, file.data.fileURL,file.data.size);props.settotalSize(props.totalSize-file.data.size)}}>Yes</button>
                                                             <button className="No" onClick={() => setDeleteModalState(null)}>No</button>
                                                         </label>
                                                         </>)
@@ -211,7 +217,7 @@ function Data(props) {
                     </div>
                     {
                         files.map((file) => {
-                            return <div className="detailsrow">
+                            return <div className="detailsrow"> 
                                 <p> <a href={file.data.fileURL} target="_blank" rel="noreferrer">
                                     <InsertDriveFileIcon />{file.data.filename}</a></p>
                                 <p>{file.data.username}</p>
@@ -251,7 +257,7 @@ function Data(props) {
                                                 {
                                                     deleting ? (<p className="uploading">Deleting</p>) : (
                                                         <>  <label>
-                                                            <button className="Yes" onClick={() => deleteFile(file.data.filename, file.data.fileURL)}>Yes</button>
+                                                            <button className="Yes" onClick={() => deleteFile(file.data.filename, file.data.fileURL,file.data.size)}>Yes</button>
                                                             <button className="No" onClick={() => setDeleteModalState(null)}>No</button>
                                                         </label>
                                                         </>)

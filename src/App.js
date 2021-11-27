@@ -9,6 +9,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [searchState, setsearchState] = useState(false);
   const [searchValue,setSearchValue] = useState("");
+  const [totalSize,settotalSize] = useState(0);
   const signIn=()=>{
     auth.signInWithPopup(provider).then(({user})=>{
       setUser(user);
@@ -30,8 +31,8 @@ function App() {
         <>
     <Header photoURL = {user.photoURL} loginState={setUser} userData={user} searchState={searchState} setsearchState={setsearchState} searchValue={searchValue} setsearchValue={setSearchValue}/>
     <div className="App">
-      <Sidebar loginState={setUser} userData={user}/>
-      <Data loginState={setUser} userData={user} searchState={searchState} setsearchState={setsearchState} searchValue={searchValue}/>
+      <Sidebar loginState={setUser} userData={user} totalSize={totalSize}/>
+      <Data loginState={setUser} userData={user} searchState={searchState} setsearchState={setsearchState} searchValue={searchValue} totalSize={totalSize} settotalSize={settotalSize}/>
     </div>
     </>
     ):(
