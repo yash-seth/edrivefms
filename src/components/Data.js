@@ -20,6 +20,7 @@ function Data(props) {
     const [deleting, setDeleting] = useState(false);
     const [shareModalState, setshareModalState] = useState(null);
     const [sharing, setsharing] = useState(false);
+    const [folderView, setfolderView] = useState(false);
     useEffect(() => {
         db.collection(`${props.userData.displayName}`).onSnapshot(snapshot => {
             setFiles(snapshot.docs.map(doc => ({
@@ -34,7 +35,6 @@ function Data(props) {
         const dm = decimals < 0 ? 0 : decimals;
         const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
-        if(props.searchState==false) props.settotalSize(totalBytes+=bytes);
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
     const deleteFile = (filename, fileURL,bytes) => {
@@ -55,6 +55,7 @@ function Data(props) {
                 }
             }  
             if(files.length===0)props.settotalSize(0);
+            storageHandler();
             setDeleteModalState(null);
             setDeleting(false);
         }, 2000);
@@ -75,13 +76,35 @@ function Data(props) {
 
     }
 
+    const storageHandler =() =>{
+    if(folderView===false){
+    files.map((file) => {
+        if(file.data.type !== "folder") {
+            props.settotalSize(totalBytes+=file.data.size);
+        }
+        if(fileCounter(files)===0) props.settotalSize(0);
+    })
+    }
+    }
+
+    const fileCounter =(files)=>
+    {
+        let i=0,fileCounterVar=0;
+        for(i=0;i<files.length;i++)
+        {
+            if(files[i].data.type==='file')fileCounterVar++;
+        }
+        return fileCounterVar
+    }
+    storageHandler();
+
     return props.searchState ? 
     (
         <div className="data">
             <div className="data__header">
                 <div className="data__headerLeft">
                     <p>My Drive</p>
-                    <button className="Root-Btn" onClick={()=>{props.setFolderID("/")}}>Root</button>
+                    <button className="Root-Btn" onClick={()=>{props.setFolderID("/");setfolderView(false)}}>Root</button>
                 </div>
                 <div className="data__headerRight">
                     <ListIcon />
@@ -95,7 +118,7 @@ function Data(props) {
                         files.map((file) => {
                             if( file.data.parentFolderID == props.folderID && file.data.type == "folder"){
                                 return file.data.filename.toLowerCase().includes(String(props.searchValue))? <>
-                                <a onClick={()=> {props.setFolderID(`${file.data.folderID}`)}}>
+                                <a onClick={()=> {props.setFolderID(`${file.data.folderID}`);setfolderView(false)}}>
                                     <div className="data_file">
                                         <p>{file.data.filename}</p>
                                     </div>
