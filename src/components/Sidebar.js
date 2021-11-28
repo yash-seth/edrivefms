@@ -76,6 +76,16 @@ function Sidebar(props) {
     const handleFolderNameChange = (e) => {
         setFolderName(e.target.value);
     }
+
+    function formatBytes(bytes, decimals = 2) {
+        if (bytes === 0) return '0 Bytes';
+
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
     return (
         <>
             <Modal open={open} onClose={handleClose}>
@@ -152,8 +162,8 @@ function Sidebar(props) {
                         <span>Storage</span>
                     </div>
                     <div className="progress_bar">
-                        <progress size="tiny" value="50" max="100" />
-                        <span>6.45 GB of 15GB used</span>
+                        <progress size="tiny" value={props.totalSize===0?0:(props.totalSize/(1024*1024))+750} max={15000} />
+                        <span>{formatBytes(props.totalSize)} of 15GB used</span>
                     </div>
                 </div>
                 <buttton onClick={() => props.loginState(null)}>
