@@ -10,6 +10,8 @@ function App() {
   const [searchState, setsearchState] = useState(false);
   const [searchValue,setSearchValue] = useState("");
   const [totalSize,settotalSize] = useState(0);
+  const [folderID, setFolderID] = useState("/");
+  const [path,setPath] = useState(["/"]); // for breadcrumbs OR Path to be displayed over the top of the page
   const signIn=()=>{
     auth.signInWithPopup(provider).then(({user})=>{
       setUser(user);
@@ -31,8 +33,8 @@ function App() {
         <>
     <Header photoURL = {user.photoURL} loginState={setUser} userData={user} searchState={searchState} setsearchState={setsearchState} searchValue={searchValue} setsearchValue={setSearchValue}/>
     <div className="App">
-      <Sidebar loginState={setUser} userData={user} totalSize={totalSize}/>
-      <Data loginState={setUser} userData={user} searchState={searchState} setsearchState={setsearchState} searchValue={searchValue} totalSize={totalSize} settotalSize={settotalSize}/>
+      <Sidebar loginState={setUser} userData={user} totalSize={totalSize} folderID={folderID} setFolderID={setFolderID} />
+      <Data loginState={setUser} userData={user} searchState={searchState} setsearchState={setsearchState} searchValue={searchValue} totalSize={totalSize} settotalSize={settotalSize} folderID={folderID} setFolderID={setFolderID} path={path} setPath={setPath}/>
     </div>
     </>
     ):(

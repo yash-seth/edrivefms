@@ -22,6 +22,31 @@
     margin-top: 30px;
     margin-bottom: 30px;
 }
+.Root-Btn{
+    background-color: transparent;
+    border: 2px solid rgba(0,0,0,0.5);
+    display: flex;
+    width: 70px;
+    height: 35px;
+    align-items: center;
+    border-radius: 40px;
+    padding: 15px;
+    margin-left: 30px;
+    margin-bottom: 30px;
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.Root-Btn:hover{
+    background-color:rgba(0,0,0,0.5) ;
+    color: #fff;
+    padding: 15px;
+    padding-left: 17px;
+    border: none;
+    z-index: 10;
+}
+
 .data_file{
 text-align: center;
 border: 1px solid lightgray;
@@ -41,6 +66,27 @@ border-radius: 5px;
     font-size: 12px;
     background-color: whitesmoke;
     padding: 10px 0px;
+}
+.FolderHeading{
+    margin: 10px;
+    margin-top: 20px;
+    padding: 10px;
+    font-weight: 600;
+}
+.folder p{
+    border-top: none;
+    background-color: transparent;
+    text-decoration: none;
+    margin-top: -5px;
+    margin-bottom: 5px;
+    margin-right: -5px;
+    text-transform: capitalize;
+    color: rgba(0,0,0,0.7);
+    font-weight: 500;
+    font-size: 15px;
+}
+.folder a{
+    text-decoration: none;
 }
 .detailsrow{
     display: flex;

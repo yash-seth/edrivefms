@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "../css/sidebar.css"
 import addlogo from "../addfile.png"
 import addfile from "../newfile.ico"
@@ -43,7 +43,6 @@ function Sidebar(props) {
         event.preventDefault();
         setUploading(true);
         storage.ref(`Myfiles/${props.userData.displayName}/${file.name}`).put(file).then(snapshot => {
-
             storage.ref(`Myfiles/${props.userData.displayName}`).child(file.name).getDownloadURL().then(url => {
                 db.collection(`${props.userData.displayName}`).add({
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -51,7 +50,10 @@ function Sidebar(props) {
                     fileURL: url,
                     username: props.userData.displayName,
                     userId: props.userData.uid,
-                    size: snapshot._delegate.bytesTransferred
+                    size: snapshot._delegate.bytesTransferred,
+                    parentFolderID: props.folderID,
+                    folderID: "",
+                    type:"file",
                 })
                 setUploading(false);
                 setFile(null);
@@ -60,18 +62,39 @@ function Sidebar(props) {
         })
     }
 
-    const handleCreateFolder = () => {
-        setCreating(true);
-        setFolderName(folderName);
-        // here implement the folder creation part
+const handleCreateFolder = (event) => {
+    event.preventDefault();
+    setCreating(true);
+    setFolderName(folderName);
+    // creating folderID
+    let ID ="";
+    let letters = 'abcdefghijklmnopqrstuvwxyz';
+    for(let i=0; i<5; i++){
+        ID += letters[Math.floor(Math.random() * letters.length)];
+    }
+    // here implement the folder creation part
 
-        console.log(`Folder '${folderName}' was created!`);
-        setFolderName("");
-        setTimeout(function () {
+    // console.log(`Folder '${folderName}' was created!`);
+    storage.ref(`Myfiles/${props.userData.displayName}/${folderName}`).put(file).then(snapshot => {
+        storage.ref(`Myfiles/${props.userData.displayName}`).child(folderName).getDownloadURL().then(url => {
+            db.collection(`${props.userData.displayName}`).add({
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                filename: folderName,
+                fileURL: url,
+                userId: props.userData.uid,
+                size: 0,
+                parentFolderID: props.folderID,
+                folderID: ID,
+                type:"folder",
+            })
+            setFolderName("");
             setCreating(false);
             setModalState(false);
-        }, 2000);
-    }
+        })
+    })
+        
+}
+
 
     const handleFolderNameChange = (e) => {
         setFolderName(e.target.value);
