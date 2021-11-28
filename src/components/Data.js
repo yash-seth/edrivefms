@@ -11,6 +11,7 @@ import { db } from '../firebase';
 import { Modal } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import folderimg from "../folderimage.jpg";
 
 
 function Data(props) {
@@ -95,11 +96,12 @@ function Data(props) {
                         files.map((file) => {
                             if( file.data.parentFolderID == props.folderID && file.data.type == "folder"){
                                 return file.data.filename.toLowerCase().includes(String(props.searchValue))? <>
+                                <div className="data_file">
                                 <a onClick={()=> {props.setFolderID(`${file.data.folderID}`)}}>
-                                    <div className="data_file">
-                                        <p>{file.data.filename}</p>
-                                    </div>
-                                    </a>
+                                <img src={folderimg}/>
+                                <p>{file.data.filename}</p>    
+                                </a>
+                                </div>
                                 </>:null
                             }
                         })
@@ -200,12 +202,12 @@ function Data(props) {
                             if( file.data.parentFolderID == props.folderID && file.data.type == "folder"){
                                 // console.log(file.data.filename);
                                 return <>
-                                    <a onClick={()=> {props.setFolderID(`${file.data.folderID}`)}}>
-                                        {/* {console.log(props.folderID)} */}
-                                        <div className="data_file">
-                                            <p>{file.data.filename}</p>
-                                        </div>
-                                    </a>
+                                <div className="data_file">
+                                <a onClick={()=> {props.setFolderID(`${file.data.folderID}`)}}>
+                                <img src={folderimg}/>
+                                <p>{file.data.filename}</p>    
+                                </a>
+                                </div>
                                 </>
                             }
                         })
