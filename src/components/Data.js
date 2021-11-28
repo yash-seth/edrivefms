@@ -116,7 +116,7 @@ function Data(props) {
                 <div className="data_grid folder">
                     {
                         files.map((file) => {
-                            if( file.data.parentFolderID == props.folderID && file.data.type == "folder"){
+                            if( file.data.parentFolderID === props.folderID && file.data.type === "folder"){
                                 return file.data.filename.toLowerCase().includes(String(props.searchValue))? <>
                                 <a onClick={()=> {props.setFolderID(`${file.data.folderID}`);setfolderView(false)}}>
                                     <div className="data_file">
@@ -141,7 +141,7 @@ function Data(props) {
                     </div>
                     {
                         files.map((file) => {
-                            if( file.data.parentFolderID == props.folderID && file.data.type == "file"){
+                            if( file.data.parentFolderID === props.folderID && file.data.type === "file"){
                                 return file.data.filename.toLowerCase().includes(String(props.searchValue))? <div className="detailsrow">
                                 <p> <a href={file.data.fileURL} target="_blank">
                                     <InsertDriveFileIcon />{file.data.filename}</a></p>
@@ -220,7 +220,7 @@ function Data(props) {
                     {  files.map((file) => {
                             // console.log(file);
                             // let location = window.location.pathname;
-                            if( file.data.parentFolderID == props.folderID && file.data.type == "folder"){
+                            if( file.data.parentFolderID === props.folderID && file.data.type === "folder"){
                                 // console.log(file.data.filename);
                                 return <>
                                     <a onClick={()=> {props.setFolderID(`${file.data.folderID}`)}}>
@@ -247,7 +247,7 @@ function Data(props) {
                     </div>
                     {
                         files.map((file) => {
-                            if( file.data.parentFolderID == props.folderID && file.data.type == "file"){
+                            if( file.data.parentFolderID === props.folderID && file.data.type === "file"){
                             return <div className="detailsrow"> 
                                 <p> <a href={file.data.fileURL} target="_blank" rel="noreferrer">
                                     <InsertDriveFileIcon />{file.data.filename}</a></p>
