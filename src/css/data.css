@@ -51,7 +51,7 @@
 text-align: center;
 border: 1px solid lightgray;
 margin:10px;
-min-width:200px;
+min-width:100px;
 padding:10px 0px 0px 0px;
 border-radius: 5px;
 }
@@ -150,4 +150,7 @@ border-radius: 5px;
     background-color: red;
     color:white;
     font-size: 15;
+}
+.data_file img{
+    width:50px;
 }
