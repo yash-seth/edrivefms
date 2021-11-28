@@ -81,7 +81,7 @@ function Data(props) {
             <div className="data__header">
                 <div className="data__headerLeft">
                     <p>My Drive</p>
-                    <ArrowDropDownIcon />
+                    <button className="Root-Btn" onClick={()=>{props.setFolderID("/")}}>Root</button>
                 </div>
                 <div className="data__headerRight">
                     <ListIcon />
@@ -89,18 +89,19 @@ function Data(props) {
                 </div>
             </div>
             <div className="data__content">
-                <div className="data_grid">
+            <div className="FolderHeading">Folders:</div>
+                <div className="data_grid folder">
                     {
                         files.map((file) => {
-                            return file.data.filename.toLowerCase().includes(String(props.searchValue))? <>
-                            <a href={file.data.fileURL} target="_blank">
-                                <div className="data_file">
-                                
-                                    <InsertDriveFileIcon />
-                                    <p>{file.data.filename}</p>
-                                </div>
-                                </a>
-                            </>:null
+                            if( file.data.parentFolderID == props.folderID && file.data.type == "folder"){
+                                return file.data.filename.toLowerCase().includes(String(props.searchValue))? <>
+                                <a onClick={()=> {props.setFolderID(`${file.data.folderID}`)}}>
+                                    <div className="data_file">
+                                        <p>{file.data.filename}</p>
+                                    </div>
+                                    </a>
+                                </>:null
+                            }
                         })
                     }
 
@@ -117,7 +118,8 @@ function Data(props) {
                     </div>
                     {
                         files.map((file) => {
-                            return file.data.filename.toLowerCase().includes(String(props.searchValue))? <div className="detailsrow">
+                            if( file.data.parentFolderID == props.folderID && file.data.type == "file"){
+                                return file.data.filename.toLowerCase().includes(String(props.searchValue))? <div className="detailsrow">
                                 <p> <a href={file.data.fileURL} target="_blank">
                                     <InsertDriveFileIcon />{file.data.filename}</a></p>
                                 <p>{file.data.username}</p>
@@ -166,7 +168,8 @@ function Data(props) {
                                         </form>
                                     </div>
                                 </Modal>
-                            </div> : null
+                                </div> : null
+                            }
                         })
                     }
 
@@ -181,7 +184,7 @@ function Data(props) {
             <div className="data__header">
                 <div className="data__headerLeft">
                     <p>My Drive</p>
-                    <ArrowDropDownIcon />
+                    <button className="Root-Btn" onClick={()=>{props.setFolderID("/")}}>Root</button>
                 </div>
                 <div className="data__headerRight">
                     <ListIcon />
@@ -189,18 +192,22 @@ function Data(props) {
                 </div>
             </div>
             <div className="data__content">
-                <div className="data_grid">
-                    {
-                        files.map((file) => {
-                            return <>
-                            <a href={file.data.fileURL} target="_blank">
-                                <div className="data_file">
-                                
-                                    <InsertDriveFileIcon />
-                                    <p>{file.data.filename}</p>
-                                </div>
-                                </a>
-                            </>
+                <div className="FolderHeading">Folders:</div>
+                <div className="data_grid  folder">
+                    {  files.map((file) => {
+                            // console.log(file);
+                            // let location = window.location.pathname;
+                            if( file.data.parentFolderID == props.folderID && file.data.type == "folder"){
+                                // console.log(file.data.filename);
+                                return <>
+                                    <a onClick={()=> {props.setFolderID(`${file.data.folderID}`)}}>
+                                        {/* {console.log(props.folderID)} */}
+                                        <div className="data_file">
+                                            <p>{file.data.filename}</p>
+                                        </div>
+                                    </a>
+                                </>
+                            }
                         })
                     }
 
@@ -217,6 +224,7 @@ function Data(props) {
                     </div>
                     {
                         files.map((file) => {
+                            if( file.data.parentFolderID == props.folderID && file.data.type == "file"){
                             return <div className="detailsrow"> 
                                 <p> <a href={file.data.fileURL} target="_blank" rel="noreferrer">
                                     <InsertDriveFileIcon />{file.data.filename}</a></p>
@@ -267,6 +275,7 @@ function Data(props) {
                                     </div>
                                 </Modal>  
                             </div>
+                            }
                         })
                     }
 
