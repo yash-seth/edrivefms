@@ -162,8 +162,8 @@ function Sidebar(props) {
                         <span>Storage</span>
                     </div>
                     <div className="progress_bar">
-                        <progress size="tiny" value={props.totalSize===0?0:(props.totalSize/(1024*1024))*100} max={15000} />
-                        <span>{formatBytes(props.totalSize===0?0:props.totalSize)} of 15GB used</span>
+                        <progress size="tiny" value={props.totalSize===0?0:(props.totalSize/(1024*1024))+750} max={15000} />
+                        <span>{formatBytes(props.totalSize)} of 15GB used</span>
                     </div>
                 </div>
                 <buttton onClick={() => props.loginState(null)}>
