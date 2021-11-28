@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import "../css/header.css"
 import gdrivelogo from "../glogo.png"
 import SearchIcon from '@mui/icons-material/Search';
@@ -8,7 +8,6 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AppsIcon from '@mui/icons-material/Apps';
 import { Avatar } from '@mui/material';
-import { db, storage } from '../firebase';
 import CloseIcon from '@mui/icons-material/Close';
 
 function Header(props) {

@@ -11,7 +11,6 @@ import { db } from '../firebase';
 import { Modal } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import folderimg from "../folderimage.jpg";
 
 
 function Data(props) {
@@ -21,6 +20,7 @@ function Data(props) {
     const [deleting, setDeleting] = useState(false);
     const [shareModalState, setshareModalState] = useState(null);
     const [sharing, setsharing] = useState(false);
+    const [folderView, setfolderView] = useState(false);
     useEffect(() => {
         db.collection(`${props.userData.displayName}`).onSnapshot(snapshot => {
             setFiles(snapshot.docs.map(doc => ({
@@ -35,7 +35,6 @@ function Data(props) {
         const dm = decimals < 0 ? 0 : decimals;
         const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
-        if(props.searchState==false) props.settotalSize(totalBytes+=bytes);
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
     const deleteFile = (filename, fileURL,bytes) => {
@@ -55,7 +54,7 @@ function Data(props) {
                     break;
                 }
             }  
-            if(files.length===0)props.settotalSize(0);
+            storageHandler();
             setDeleteModalState(null);
             setDeleting(false);
         }, 2000);
@@ -76,13 +75,115 @@ function Data(props) {
 
     }
 
+    const storageHandler =() =>{
+    files.map((file) => {
+        if(file.data.type !== "folder") {
+            props.settotalSize(totalBytes+=file.data.size);
+        }
+        if(fileCounter(files)===0) props.settotalSize(0);
+    })
+    }
+
+    const fileCounter =(files)=>
+    {
+        let i=0,fileCounterVar=0;
+        for(i=0;i<files.length;i++)
+        {
+            if(files[i].data.type==='file')fileCounterVar++;
+        }
+        return fileCounterVar
+    }
+    storageHandler();
+
     return props.searchState ? 
     (
+        !folderView ? 
         <div className="data">
             <div className="data__header">
                 <div className="data__headerLeft">
                     <p>My Drive</p>
-                    <button className="Root-Btn" onClick={()=>{props.setFolderID("/")}}>Root</button>
+                    <button className="Root-Btn" onClick={()=>{props.setFolderID("/");setfolderView(false)}}>Root</button>
+                </div>
+                <div className="data__headerRight">
+                    <ListIcon />
+                    <InfoOutlinedIcon />
+                </div>
+            </div>
+            <div className="data__content">
+                <div className="data_list">
+                    <div className="detailsrow">
+                        <p><b>Name <ArrowDownwardIcon /></b></p>
+                        <p><b>Owner</b></p>
+                        <p><b>Created At</b></p>
+                        <p><b>File Size</b></p>
+                        <p><b>Share</b></p>
+                        <p><b>Delete</b></p>
+                    </div>
+                    {
+                        files.map((file) => {
+                                return file.data.filename.toLowerCase().includes(String(props.searchValue))? <div className="detailsrow">
+                                <p> <a href={file.data.fileURL} target="_blank">
+                                    <InsertDriveFileIcon />{file.data.filename}</a></p>
+                                <p>{file.data.username}</p>
+                                <p>{new Date(file.data.timestamp?.seconds * 1000).toUTCString()}</p>
+                                <p>{formatBytes(file.data.size)}</p>
+                                <p><button className="delete" onClick={() => setshareModalState(file.data.fileURL)}><ShareIcon/></button></p>
+                                
+                                <Modal open={file.data.fileURL===shareModalState} onClose ={shareClose}>
+                                    <div className="modal_pop">
+                                        <form>
+                                            <div className="modalHeading">
+                                                <h3>Copy the Below Link to Share</h3>
+                                            </div>
+                                            <div className="modalBody">
+                                                {
+                                                    sharing ? (<p className="uploading">Copying to Clipboard</p>) : (
+                                                        <> <label>
+                                                            <input className="link" type ="text" value={shareModalState} disabled/>
+                                                            <CopyToClipboard text={shareModalState}><button className="delete" onClick={ ()=> CopyClipboard()}><ContentCopyIcon/></button></CopyToClipboard>
+                                                            <button className="Close" onClick={() => setshareModalState(false)}>Close</button>
+                                                            </label>
+                                                        </>)
+                                                }
+                                            </div>
+                                            
+                                        </form>
+                                    </div>    
+                                </Modal>
+                                <div className="del"><p><button className="delete" onClick={() => setDeleteModalState(file.data.fileURL)}><DeleteIcon /></button></p></div>
+                                <Modal open={file.data.fileURL===deleteModalState} onClose={handleClose}>
+                                    <div className="modal_pop">
+                                        <form>
+                                            <div className="modalHeading">
+                                                <h3>Confirm Delete Operation?</h3>
+                                            </div>
+                                            <div className="modalBody">
+                                                {
+                                                    deleting ? (<p className="uploading">Deleting</p>) : (
+                                                        <>  <label>
+                                                            <button className="Yes" onClick={() =>{ deleteFile(file.data.filename, file.data.fileURL,file.data.size);props.settotalSize(props.totalSize-file.data.size)}}>Yes</button>
+                                                            <button className="No" onClick={() => setDeleteModalState(null)}>No</button>
+                                                        </label>
+                                                        </>)
+                                                }
+                                            </div>
+                                        </form>
+                                    </div>
+                                </Modal>
+                                </div> : null
+                        })
+                    }
+
+                </div>
+
+            </div>
+        </div>
+        :
+        <div className="data">
+            <div className="data__header">
+                <div className="data__headerLeft">
+                    <p>My Drive</p>
+                    <button className="Root-Btn" onClick={()=>{props.setFolderID("/");setfolderView(false)}}>Root</button>
                 </div>
                 <div className="data__headerRight">
                     <ListIcon />
@@ -94,14 +195,13 @@ function Data(props) {
                 <div className="data_grid folder">
                     {
                         files.map((file) => {
-                            if( file.data.parentFolderID == props.folderID && file.data.type == "folder"){
+                            if( file.data.parentFolderID === props.folderID && file.data.type === "folder"){
                                 return file.data.filename.toLowerCase().includes(String(props.searchValue))? <>
-                                <div className="data_file">
-                                <a onClick={()=> {props.setFolderID(`${file.data.folderID}`)}}>
-                                <img src={folderimg}/>
-                                <p>{file.data.filename}</p>    
-                                </a>
-                                </div>
+                                <a onClick={()=> {props.setFolderID(`${file.data.folderID}`);setfolderView(true)}}>
+                                    <div className="data_file">
+                                        <p>{file.data.filename}</p>
+                                    </div>
+                                    </a>
                                 </>:null
                             }
                         })
@@ -120,7 +220,7 @@ function Data(props) {
                     </div>
                     {
                         files.map((file) => {
-                            if( file.data.parentFolderID == props.folderID && file.data.type == "file"){
+                            if( file.data.parentFolderID === props.folderID && file.data.type === "file"){
                                 return file.data.filename.toLowerCase().includes(String(props.searchValue))? <div className="detailsrow">
                                 <p> <a href={file.data.fileURL} target="_blank">
                                     <InsertDriveFileIcon />{file.data.filename}</a></p>
@@ -186,7 +286,7 @@ function Data(props) {
             <div className="data__header">
                 <div className="data__headerLeft">
                     <p>My Drive</p>
-                    <button className="Root-Btn" onClick={()=>{props.setFolderID("/")}}>Root</button>
+                    <button className="Root-Btn" onClick={()=>{props.setFolderID("/");setfolderView(false)}}>Root</button>
                 </div>
                 <div className="data__headerRight">
                     <ListIcon />
@@ -199,15 +299,15 @@ function Data(props) {
                     {  files.map((file) => {
                             // console.log(file);
                             // let location = window.location.pathname;
-                            if( file.data.parentFolderID == props.folderID && file.data.type == "folder"){
+                            if( file.data.parentFolderID === props.folderID && file.data.type === "folder"){
                                 // console.log(file.data.filename);
                                 return <>
-                                <div className="data_file">
-                                <a onClick={()=> {props.setFolderID(`${file.data.folderID}`)}}>
-                                <img src={folderimg}/>
-                                <p>{file.data.filename}</p>    
-                                </a>
-                                </div>
+                                    <a onClick={()=> {props.setFolderID(`${file.data.folderID}`);setfolderView(true)}}>
+                                        {/* {console.log(props.folderID)} */}
+                                        <div className="data_file">
+                                            <p>{file.data.filename}</p>
+                                        </div>
+                                    </a>
                                 </>
                             }
                         })
@@ -226,7 +326,7 @@ function Data(props) {
                     </div>
                     {
                         files.map((file) => {
-                            if( file.data.parentFolderID == props.folderID && file.data.type == "file"){
+                            if( file.data.parentFolderID === props.folderID && file.data.type === "file"){
                             return <div className="detailsrow"> 
                                 <p> <a href={file.data.fileURL} target="_blank" rel="noreferrer">
                                     <InsertDriveFileIcon />{file.data.filename}</a></p>
