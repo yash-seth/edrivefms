@@ -95,3 +95,33 @@
     transform: scale(1.1);
     transition-duration: 0.5s;
 }
+
+.banner {
+    background: #009579;
+  }
+  
+  .banner__content {
+    padding: 16px;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+  }
+  
+  .banner__text {
+    flex-grow: 1;
+    line-height: 0.5;
+    font-family: "Quicksand", sans-serif;
+  }
+  
+  .banner__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .banner__text,
+  .banner__close > span {
+    color: #ffffff;
+  }
+  

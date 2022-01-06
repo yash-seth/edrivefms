@@ -29,6 +29,14 @@ function Header(props) {
         setSearchInput(e.target.value);
     }
     return (
+        <>
+        <div class="banner">
+            <div class="banner__content">
+                <div class="banner__text">
+                    <strong>Note:</strong> The backend has been temporarily disabled for demo purposes.
+                </div>
+            </div>
+        </div>
         <div className="header">
            
             <div className="header__logo">
@@ -57,6 +65,7 @@ function Header(props) {
             </div>
 
         </div>
+        </>
     )
 }
 
