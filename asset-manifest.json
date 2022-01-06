@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/edrivefms/static/css/main.3f6ffe9c.chunk.css",
-    "main.js": "/edrivefms/static/js/main.172fc3ea.chunk.js",
-    "main.js.map": "/edrivefms/static/js/main.172fc3ea.chunk.js.map",
+    "main.css": "/edrivefms/static/css/main.9361cd29.chunk.css",
+    "main.js": "/edrivefms/static/js/main.54a330aa.chunk.js",
+    "main.js.map": "/edrivefms/static/js/main.54a330aa.chunk.js.map",
     "runtime-main.js": "/edrivefms/static/js/runtime-main.94c98594.js",
     "runtime-main.js.map": "/edrivefms/static/js/runtime-main.94c98594.js.map",
     "static/css/2.0a9ec390.chunk.css": "/edrivefms/static/css/2.0a9ec390.chunk.css",
@@ -10,7 +10,7 @@
     "static/js/2.2d48b118.chunk.js.map": "/edrivefms/static/js/2.2d48b118.chunk.js.map",
     "index.html": "/edrivefms/index.html",
     "static/css/2.0a9ec390.chunk.css.map": "/edrivefms/static/css/2.0a9ec390.chunk.css.map",
-    "static/css/main.3f6ffe9c.chunk.css.map": "/edrivefms/static/css/main.3f6ffe9c.chunk.css.map",
+    "static/css/main.9361cd29.chunk.css.map": "/edrivefms/static/css/main.9361cd29.chunk.css.map",
     "static/js/2.2d48b118.chunk.js.LICENSE.txt": "/edrivefms/static/js/2.2d48b118.chunk.js.LICENSE.txt",
     "static/media/addfile.c8772922.png": "/edrivefms/static/media/addfile.c8772922.png",
     "static/media/glogo.42e0a7e4.png": "/edrivefms/static/media/glogo.42e0a7e4.png",
@@ -20,7 +20,7 @@
     "static/js/runtime-main.94c98594.js",
     "static/css/2.0a9ec390.chunk.css",
     "static/js/2.2d48b118.chunk.js",
-    "static/css/main.3f6ffe9c.chunk.css",
-    "static/js/main.172fc3ea.chunk.js"
+    "static/css/main.9361cd29.chunk.css",
+    "static/js/main.54a330aa.chunk.js"
   ]
 }
